@@ -12,17 +12,17 @@ export default function App() {
     const validUser = 'admin';
     const validPass = '1234';
     if (user === validUser && pass === validPass) {
-      Console.log('Correcto', 'Inicio de sesión exitoso');
+      Alert.alert('Correcto', 'Inicio de sesión exitoso');
       setLoggedIn(true);
     } else {
-      Console.log('Error', 'Usuario o contraseña incorrectos');
+      Alert.alert('Error', 'Usuario o contraseña incorrectos');
     }
   };
 
   const cambiarImagen = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') {
-      Console.log('Permiso denegado', 'Se necesita acceso a las imágenes');
+      Alert.alert('Permiso denegado', 'Se necesita acceso a las imágenes');
       return;
     }
     const result = await ImagePicker.launchImageLibraryAsync({
