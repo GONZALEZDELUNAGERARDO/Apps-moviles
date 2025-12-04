@@ -1,18 +1,3 @@
-import { CameraView, useCameraPermissions } from 'expo-camera';
-import { useRef, useState } from 'react';
-import {
-  Button,
-  View,
-  Image,
-  Text,
-  TextInput,
-  StyleSheet,
-  Alert,
-  Linking,
-  Keyboard,
-  TouchableWithoutFeedback,
-} from 'react-native';
-
 export default function App() {
   const [permission, requestPermission] = useCameraPermissions();
   const cameraRef = useRef(null);
@@ -42,7 +27,6 @@ export default function App() {
   };
 
   const handleBarcodeScanned = ({ type, data }) => {
-    // Evita múltiples lecturas
     if (!scanning) return;
     setScanning(false);
     setQrData(data);
@@ -63,12 +47,22 @@ export default function App() {
     }
   };
 
+
+  const logout = () => {
+    setUsername('');
+    setPassword('');
+    setPhoto(null);
+    setQrData(null);
+    setScanning(false);
+    Alert.alert("Sesión cerrada", "Has cerrado sesión correctamente.");
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <Text style={styles.header}>Inicio de Sesión</Text>
 
-        {/* Cámara o foto */}
+        {}
         {scanning ? (
           <CameraView
             ref={cameraRef}
@@ -101,7 +95,7 @@ export default function App() {
           </View>
         )}
 
-        {/* Resultado del QR */}
+        {}
         {qrData && (
           <View style={{ marginBottom: 15, alignItems: "center" }}>
             <Text style={{ color: "#333", marginBottom: 10 }}>
@@ -114,7 +108,7 @@ export default function App() {
           </View>
         )}
 
-        {/* Inputs si no está escaneando */}
+        {}
         {!scanning && (
           <>
             <TextInput
@@ -131,87 +125,12 @@ export default function App() {
               onChangeText={setPassword}
             />
             <Button title="Aceptar" onPress={() => {}} color="#4C6EF5" />
+
+            {}
+            <Button title="Cerrar Sesión" onPress={logout} color="#D00000" />
           </>
         )}
       </View>
     </TouchableWithoutFeedback>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#121212', // Fondo oscuro
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  header: {
-    fontSize: 28,
-    color: '#00E5FF', // Azul neón
-    fontWeight: 'bold',
-    marginBottom: 25,
-    textShadowColor: '#00E5FF',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 10,
-  },
-  profileContainer: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    overflow: 'hidden',
-    marginBottom: 20,
-    backgroundColor: '#1E1E1E',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#00E5FF',
-  },
-  profileImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    marginBottom: 20,
-    borderWidth: 2,
-    borderColor: '#00E5FF',
-  },
-  camera: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-  },
-  cameraQR: {
-    width: '100%',
-    height: 320,
-    borderRadius: 12,
-    marginBottom: 20,
-    borderWidth: 2,
-    borderColor: '#00E5FF',
-  },
-  buttonContainer: {
-    marginBottom: 25,
-    gap: 12,
-    width: '100%',
-  },
-  input: {
-    width: '100%',
-    height: 45,
-    borderColor: '#00E5FF',
-    borderWidth: 1.5,
-    borderRadius: 8,
-    marginBottom: 15,
-    paddingLeft: 12,
-    color: '#212121',
-    backgroundColor: '#FFF',
-    shadowColor: '#00E5FF',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 4,
-  },
-  text: {
-    fontSize: 16,
-    color: '#FFF',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-});
